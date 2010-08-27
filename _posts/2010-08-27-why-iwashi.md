@@ -21,7 +21,11 @@ use a lot less RAM to do so if you can pack 4 bases into each byte,
 rather than 1, or, worse yet, 1 base per 2-bytes if you use
 char-arrays.
 
-Enter iwashi (Japanese for sardine, I think -- at least that's what they call it at the sushi counter). Iwashi provides for efficient storage of 2-, 4- and 5-bit integers in clojure arrays. There are 6 main functions that one calls to use Iwashi. Three functions for creating iwashi arrays:
+Enter iwashi (Japanese for sardine, I think -- at least that's what
+they call it at the sushi counter). Iwashi provides for efficient
+storage of 2-, 4- and 5-bit integers in clojure arrays. There are 6
+main functions that one calls to use Iwashi. Three functions for
+creating iwashi arrays:
 
 * make-2-bit-array
 * make-4-bit-array
@@ -33,24 +37,32 @@ And three functions for using the arrays:
 * item
 * set-item
 
-For example, let's make a 2-bit array with 128 items in it and set each item to the item's index modulo 4:
+To use, make sure iwashi is on the classpath and do, for instance:
 
-    (let [q (make-2-bit-array (bigint 128))]
-      (doall (map #(set-item q % (mod % 4))
-                  (take 128 (iterate inc 0))))
-      (map #(item q %)
-           (take 128 (iterate inc 0))))
+    (require '[iwashi.array :as array])
 
+For example, let's make a 2-bit array with 128 items in it and the
+first 32 items to the item's index modulo 4:
 
-Now for a bigger, trivial, example, let's make a 4,000,000,000 element 2-bit array and set the first 32 values of it:
-
-    (let [q (make-2-bit-array (bigint 4e9))]
-      (doall (map #(set-item q (+ (bigint 3e9) %) (mod % 4))
+    (let [q (array/make-2-bit-array (bigint 128))]
+      (doall (map #(array/set-item q % (mod % 4))
                   (take 32 (iterate inc 0))))
-      (map #(item q (+ (bigint 3e9) %))
+      (map #(array/item q %)
            (take 32 (iterate inc 0))))
+    => (0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3)
 
-In another post, we'll load some DNA and protein sequences into packed arrays just for fun.
+Now for a bigger, trivial, example, let's make a 4,000,000,000
+element 2-bit array and set the first 32 values of it:
+
+    (let [q (array/make-2-bit-array (bigint 4e9))]
+      (doall (map #(array/set-item q (+ (bigint 3e9) %) (mod % 4))
+                  (take 32 (iterate inc 0))))
+      (map #(array/item q (+ (bigint 3e9) %))
+           (take 32 (iterate inc 0))))
+    => (0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3)
+
+In another post, we'll load some DNA and protein sequences into
+packed arrays just for fun.
 
 Enjoy.
 
