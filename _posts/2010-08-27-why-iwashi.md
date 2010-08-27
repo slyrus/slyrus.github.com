@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Iwashi: packed arrays in clojure
+title: Iwashi -- packed arrays in clojure
 ---
 
 {{ page.title }}
