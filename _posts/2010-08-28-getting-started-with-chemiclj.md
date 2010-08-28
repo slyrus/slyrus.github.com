@@ -132,7 +132,7 @@ that gives us the atoms:
      (chem/bonds ethane))
     ;=> (("C1" "H4") ("C1" "H3") ("C1" "H2") ("C1" "H1"))
 
-But now we get rid of the ugl #(map name %) form by partially applying
+But now we get rid of the ugly #(map name %) form by partially applying
 name to map, yielding a function that will take on argument and call (map
 name <the arg>) on that argument:
 
