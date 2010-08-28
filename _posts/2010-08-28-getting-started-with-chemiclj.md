@@ -141,10 +141,10 @@ name <the arg>) on that argument:
      (chem/bonds ethane))
     (("C1" "H4") ("C1" "H3") ("C1" "H2") ("C1" "H1"))
 
-    So, there you have it. A long, complicated way to perform simple
-    operations on one of the simplest organic molecules. In the next
-    post we'll see how to avoid some of this tedium and start building
-    more complex molecules, exploring more of the chemiclj API.
+So, there you have it. A long, complicated way to perform simple
+operations on one of the simplest organic molecules. In the next
+post we'll see how to avoid some of this tedium and start building
+more complex molecules, exploring more of the chemiclj API.
 
 --
 
