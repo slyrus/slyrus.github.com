@@ -14,7 +14,7 @@ things are arranged neatly and cleanly, and that the various bits of
 code get loaded in the proper order. One solution to this is to just
 have everything in a single file and make sure that the forms appear
 in the proper order. On the
-[refactor2](http://github.com/slyrus/chemiclj/tree/refactor2) I've
+[ns-hackery](http://github.com/slyrus/chemiclj/tree/ns-hackery) branch I've
 split things up into multiple files, and, as seems to be the clojure
 idiom, multiple ns'es, one per file. The problem that this presents
 for me is that I want to present a clean interface to other pieces of
