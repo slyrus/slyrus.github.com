@@ -6,7 +6,7 @@ title: Getting started with chemiclj
 {{ page.title }}
 ================
 
-<p class="meta">27 August 2010 - Bolinas</p>
+<p class="meta">28 August 2010 - Bolinas</p>
 
 [chemiclj](http://github.com/slyrus/chemiclj) is a library for
 representing and processing various kinds of chemical entities, such
