@@ -8,7 +8,7 @@ title: Parsing SMILES with fnparse, Part 1
 
 <p class="meta">17 September 2010 - Bolinas</p>
 
-Joshua' Choi's [fnparse](http://github.com/joshua-choi/fnparse) is a
+Joshua Choi's [fnparse](http://github.com/joshua-choi/fnparse) is a
 clojure library for creating parsers using a functional programming
 approach. Clojure (somewhat strongly) encourages a functional approach
 to programming, with immutable objects, implicit concurrency,
@@ -55,21 +55,21 @@ represent this information, start to get a bit hairy. Fortunately,
 I've got fnparse to help me deal with some of this hair, at least on
 the parsing side anyway.
 
-fnparse has module called that can be used for LL(1) or LL(n)
+fnparse has a module called hound that can be used for LL(1) or LL(n)
 parsers. I've forgotten my compiler theory from undergrad days, but I
 think SMILES strings are LL. If anyone can confirm that, that would be
 great. In any event, my SMILES parser uses hound and I haven't run
 into anything that hound can't handle yet. There are a few examples
-where we use lexical parsing to look ahead, but other than the SMILES
-syntax is quite simple, but there's a lot of information represented
-by this concise format and building up the data models from a SMILES
-string can be a bit tricky. fnparse provides the infrastructure for
-writing parsers in a functional style and handles the explicit
-management of state via a mutable object known as the context. A few
-words on the current fnparse before diving into the details and some
-examples. First of all, Joshua has been rather majorly redoing the
-core fnparse API. The upshot of this is that there's a new branch
-called the
+where we use lexical parsing to look ahead but, other than that, the
+SMILES syntax is quite simple, but there's a lot of information
+represented by this concise format and building up the data models
+from a SMILES string can be a bit tricky. fnparse provides the
+infrastructure for writing parsers in a functional style and handles
+the explicit management of state via a mutable object known as the
+context. A few words on the current fnparse before diving into the
+details and some examples. First of all, Joshua has been rather
+majorly redoing the core fnparse API. The upshot of this is that
+there's a new branch called the
 [develop](http://github.com/joshua-choi/fnparse/tree/develop/src)
 branch which has this new, improved, at least in my opinion, API, and
 this is what I've used for
@@ -78,15 +78,16 @@ as this is a work in progress, the documentation for the develop
 branch of fnparse is still rather limited. Fortunately, Joshua
 provides examples for parsing JSON files and clojure source files. The
 JSON example is fairly straightforward and is a great place to start,
-while the clojure example is a bit more complicated and makes heavy
-use of contexts. More on contexts memontarily.
+while the clojure example is a bit more complicated and (until at
+recently, anyway) makes heavy use of contexts. More on contexts
+memontarily.
 
 Oh, heck, more on contexts now. Well, almost, first lets discuss the
 general structure of an fnaprse parser. For an LL parser we can use
-hound and the entry is a method called match. match takes the initial
-state of the parser, which includes the input which we are going to
-parse, and, optionally, other data, a "rule" to match to the input
-data, and optional functions to be called on success or
+hound and the entry is a method called match. match takes 1) the
+initial state of the parser, which includes the input which we are
+going to parse, and, optionally, other data, 2) a "rule" to match to
+the input data, and 3) optional functions to be called on success or
 failure. That's simple enough, but, clearly, that puts the hard work
 in the hands of the rules. What are rules? Well, here's where hound
 comes in to give us the infrsastructure for LL parsers. We can either
@@ -104,17 +105,19 @@ this is encountered:
 
 Again, this isn't yet all that interesting, but as we add more rules,
 and add other more powerful rules besides just those to match
-literals, things get interesting indeed. The h/+ rule can be used to
-match any one of a list of items, the h/cat rule can be used to match
-a sequence of multiple items, etc... Let's take a look at a more
-complex example from the SMILES parser. The following code snippet is
-for parsing bracket expressions in SMILES. I'll spare you the details
-of what exactly these are, other than to say that they are for
-representing more complex atoms than the simple organic atoms, carbon,
-nitrogen, oxygen, phosporus and sulfur, with the usual valences. If
-one wants to represent a Silicon atom, one needs to use [Si], or a
-charged atom like a sodium ion can be represented by [Na+]. Part of
-the code for parsing these bracket symbols is shown below:
+literals, things get interesting indeed -- at least as far as SMILES
+strings can be considered interesting, in this case. The h/+ rule can
+be used to match any one of a list of items, the h/cat rule can be
+used to match a sequence of multiple items, etc... Let's take a look
+at a more complex example from the SMILES parser. The following code
+snippet is for parsing bracket expressions in SMILES. I'll spare you
+the details of what exactly these are, other than to say that they are
+for representing more complex atoms than the simple organic atoms,
+carbon, nitrogen, oxygen, phosporus and sulfur, with the usual
+charges. If one wants to represent a Silicon atom, one needs to use
+[Si], or a charged atom like a sodium ion can be represented by
+[Na+]. Part of the code for parsing these bracket symbols is shown
+below:
 
     (defn str* [objects]
       (apply str objects))
