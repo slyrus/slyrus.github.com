@@ -172,8 +172,8 @@ is a maker. Maker's are defined by fnparse's defmaker macro, but we're
 getting a little ahead of ourselves. Let's go back to the h/hook
 example. The arguments to the hook maker are [semantic-hook rule] and
 if rule is successfully matched, semantic-hook will be called with the
-results of matching rule. In this case we'll call (comp str* concat)
-on the results of the h/cat rule. (comp str* concat) returns a
+results of matching rule. In this case we'll call (comp str *  concat)
+on the results of the h/cat rule. (comp str *  concat) returns a
 function that will first concatenate it's args and then apply the str
 function to the arguments. The h/cat form is a maker that returns a
 rule that will match each of the provided rules in sequence. Here, we
